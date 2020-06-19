@@ -86,14 +86,28 @@ namespace DailyReportApi.Controllers
             if (id != item.Id)
                 return BadRequest();
             if (!_myContext.DailyReportExist(item.Id))
+            {
+                Console.WriteLine($"DailyReport id {item.Id} not found.");
                 return NotFound();
+            }
             if (!_myContext.ProjectExist(item.ProjectId))
-                return NotFound();
+            {
+                Console.WriteLine($"Project id {item.ProjectId} not found.");
+                return NotFound("");
+            }
 
-            _myContext.Entry(item).State = EntityState.Modified;
-            await _myContext.SaveChangesAsync();
+            try
+            {
+                _myContext.Entry(item).State = EntityState.Modified;
+                await _myContext.SaveChangesAsync();
 
-            return NoContent();
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                return BadRequest();
+            }
         }
 
         /*[HttpPatch("{id}")]
