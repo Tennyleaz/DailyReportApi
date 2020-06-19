@@ -43,6 +43,7 @@ namespace DailyReportApi.Controllers
                     {
                         Date = d.Date,
                         ProjectID = d.ProjectId,
+                        ReoprtID = d.Id,
                         Message = d.Message,
                         ProjectName = p.ProjectName,
                         Version = p.Version
@@ -64,10 +65,15 @@ namespace DailyReportApi.Controllers
                      {
                          Date = d.Date,
                          ProjectID = d.ProjectId,
+                         ReoprtID = d.Id,
                          Message = d.Message,
                          ProjectName = p.ProjectName,
                          Version = p.Version
-                     });
+                     })
+                .OrderBy(p => p.ProjectName)
+                .ThenBy(p => p.Version)
+                .ThenBy(d => d.Date)
+                .ThenBy(d => d.ReoprtID);
             List<PeriodReport> result = await q.ToListAsync();
             return result;
         }

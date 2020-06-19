@@ -38,6 +38,7 @@ namespace DailyReportApi.Models
     public class PeriodReport : IComparable<PeriodReport>
     {
         public DateTime Date { get; set; }
+        public int ReoprtID { get; set; }
         public int ProjectID { get; set; }
         public string ProjectName { get; set; }
         public string Message { get; set; }
